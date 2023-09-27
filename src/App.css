@@ -1,0 +1,9 @@
+.appclima{
+display: flex;
+gap: 10rem;
+}
+@media (max-width: 1000px) {
+    .appclima{
+      display: flex;
+      flex-direction: column;
+    }}
