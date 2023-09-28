@@ -17,3 +17,18 @@
   background: #1e213a;
     
 }
+.botton{
+  
+display: flex;
+justify-content: end;
+margin: 10px;
+
+
+
+}
+.bot{
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgba(84, 86, 105, 0.999);
+  color: white;
+}

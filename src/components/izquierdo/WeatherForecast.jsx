@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './WeatherForecast.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./WeatherForecast.css";
 
 function WeatherForecast({ sendCountry, apiKey }) {
   const [forecastData, setForecastData] = useState([]);
   const [error, setError] = useState(null);
+  const [unit, setUnit] = useState("metric");
 
   useEffect(() => {
     const fetchWeatherForecast = async () => {
@@ -14,20 +15,24 @@ function WeatherForecast({ sendCountry, apiKey }) {
         );
 
         if (!response.data.list || response.data.list.length === 0) {
-          throw new Error('No se encontraron datos de pronóstico.');
+          throw new Error("No se encontraron datos de pronóstico.");
         }
 
+       // Obtener la fecha actual
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 1);
         // Filtrar los datos para obtener solo los de los próximos cinco días
-        const today = new Date();
-        const fiveDaysLater = new Date(today);
-        fiveDaysLater.setDate(today.getDate() + 5);
-
         const filteredData = response.data.list.filter((item) => {
-          const itemDate = new Date(item.dt_txt);
-          return itemDate >= today && itemDate < fiveDaysLater;
-        });
+          // Convertir la fecha del elemento a un objeto Date
+          const itemDate = new Date(item.dt * 1000); // Multiplicar por 1000 para convertir segundos a milisegundos
 
-        setForecastData(filteredData.slice(0, 5)); // Mostrar solo los próximos 5 días
+          // Verificar si la fecha del elemento es mayor o igual a la fecha actual
+          // Esto mostrará los datos de los próximos 5 días.
+          return itemDate >= currentDate;
+        }); 
+
+        // Tomar solo los primeros 5 elementos para los próximos 5 días
+        setForecastData(filteredData.slice(0, 5));
       } catch (error) {
         setError(error);
       }
@@ -40,25 +45,43 @@ function WeatherForecast({ sendCountry, apiKey }) {
     return <div>Error: {error.message}</div>;
   }
 
-  const iconBaseUrl = 'https://openweathermap.org/img/wn/';
+  const iconBaseUrl = "https://openweathermap.org/img/wn/";
+  const toggleUnit = () => {
+    if (unit === "metric") {
+      setUnit("imperial");
+    } else {
+      setUnit("metric");
+    }
+  };
+
+  const convertTemperature = (tempCelsius) => {
+    if (unit === "imperial") {
+      return (tempCelsius * 9) / 5 + 32;
+    } else {
+      return tempCelsius;
+    }
+  };
 
   return (
     <div>
-      <h2>Pronóstico del Clima para los Próximos Cinco Días</h2>
+      <div className="botton">
+        <button className="bot" onClick={toggleUnit}>
+          ({unit === "metric" ? "°C" : "°F"})
+        </button>
+      </div>
       <div className="forecast-container">
         {forecastData.map((dayData, index) => (
           <div key={index} className="forecast-day">
-            <p>Día {index + 1}</p>
+            <p>Fecha: {new Date(dayData.dt * 1000).toLocaleDateString()}</p>
             <img
               src={`${iconBaseUrl}${dayData.weather[0].icon}@2x.png`}
               alt={dayData.weather[0].description}
             />
-            <p>{dayData.main.temp_max}°C</p>
-            <p>{dayData.main.temp_min}°C</p>
+            <p>Max: {convertTemperature(dayData.main.temp_max)}°</p>
+            <p>Min: {convertTemperature(dayData.main.temp_min)}°</p>
           </div>
         ))}
       </div>
-      
     </div>
   );
 }

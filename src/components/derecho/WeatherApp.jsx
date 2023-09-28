@@ -2,32 +2,44 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaLocationDot } from "react-icons/fa6";
 import './WeatherApp.css';
-function App() {
-  const [city, setCity] = useState('');
+function App(props) {
   const [weatherData, setWeatherData] = useState(null);
   const [weatherIcon, setWeatherIcon] = useState('');
+
+  function CambiarCiudad(){
+    let ciudad = document.getElementById('inputCiudad').value;
+    props.cambiociudad(ciudad);
+    fetchWeatherData(ciudad);
+
+    const iconCode = weatherData.weather[0].icon;
+    const weatherIconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+    setWeatherIcon(weatherIconUrl);
+  }
 
   const apiKey = 'f14a04ef8a47396049184fcf3ec04355';
 
   useEffect(() => {
-    if (weatherData && weatherData.weather && weatherData.weather[0]) {
+    fetchWeatherData()
+     
       // Usar el enlace base de OpenWeatherMap para las imágenes y el icono proporcionado por la API
-      const iconCode = weatherData.weather[0].icon;
-      const weatherIconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
+      
+      const weatherIconUrl = `https://openweathermap.org/img/wn/03d.png`;
       setWeatherIcon(weatherIconUrl);
-    }
-  }, [weatherData]);
+  }, []);
 
-  const fetchWeatherData = async () => {
+  const fetchWeatherData = async (c) => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?q=${ c ? c:'lima'}&appid=${apiKey}&units=metric`
       );
 
       setWeatherData(response.data);
     } catch (error) {
       console.error(error);
+
     }
+    
+  
   };
 // funcion para sacar los dias del año
 const handleDate = (timestamp) => {
@@ -38,17 +50,20 @@ const handleDate = (timestamp) => {
   const dayOfMonth = date.getDate();
   const monthAbbr = meces[date.getMonth()];
 
+ 
+
   return `${dayOfWeekAbbr}, ${dayOfMonth} ${monthAbbr}`;
 };
   return (
     <div className="App">
       <input
+        id="inputCiudad"
         type="text"
         placeholder="Seach for places"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
+      
+    
       />
-      <button onClick={fetchWeatherData}>Obtener Clima</button>
+      <button onClick={CambiarCiudad}>Obtener Clima</button>
       {weatherData && (
         <div>
           {weatherIcon && (
