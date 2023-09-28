@@ -1,0 +1,194 @@
+.weather-info {
+    display: flex;
+    gap: 20px; /* Distribución automática de columnas */
+    
+    margin-top: 4vh;
+  }
+  
+  .day-weather1 {
+    height: 25vh;
+    width: 52.3vh;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: #1e213a;
+  }
+  
+  .status {
+    color: #e7e7eb;
+    font-family: Raleway;
+    font-size: 1vw;
+    font-style: italic;
+    font-weight: 500;
+  }
+  
+  .w-status {
+    color: #e7e7eb;
+    font-family: Raleway;
+    font-size: 2vw;
+    font-weight: 500;
+  }
+  
+  .strong-status {
+    color: #e7e7eb;
+    font-family: Raleway;
+    font-size: 3vw;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+  .wind-status {
+    display: flex;
+  }
+  
+  .icon-status {
+    width: 29px;
+    height: 29px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #737272ff;
+    border-radius: 100%;
+    margin-right: 1vw;
+  }
+  
+  .icon{
+    width: 17px;
+    height: 17px;
+    transform: rotate(250deg);
+  }
+  
+  .div-tag-day-weather1 {
+    height: 22.5vh;
+    width: 50vh;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: #1e213a;
+  }
+  .p-humidity {
+    text-align: center;
+    font-family: Raleway;
+    font-size: 1vw;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+  }
+  
+  .h2-humidity {
+    text-align: center;
+    font-family: Raleway;
+    font-size: 2vw;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+  .div-rod-humidity {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+  
+  .div-percentage-humidity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #a09fb1;
+    text-align: center;
+    font-family: Raleway;
+    font-size: 0.8vw;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+  .div1-percentage-bar-humidity {
+    width: 100%;
+    height: 2vh;
+    background-color: white;
+    border-radius: 80px;
+  }
+  
+  .div2-percentage-bar-humidity {
+    width: var(--w);
+    height: 100%;
+    background: #ffec65;
+    border-radius: 80px;
+    animation: Aumentar 5s ease;
+  }
+  
+  .p-percentage-humidity {
+    display: flex;
+    justify-content: flex-end;
+    color: #a09fb1;
+    text-align: center;
+    font-family: Raleway;
+    font-size: 0.8vw;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .p-percentage-humidity {
+    display: flex;
+    justify-content: flex-end;
+    color: #a09fb1;
+    text-align: center;
+    font-family: Raleway;
+    font-size: 0.8vw;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+  .abajo{
+    display: flex;
+    gap: 20px;
+  }
+  .strong-humidity {
+    font-family: Raleway;
+    font-size: 3vw;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .div-tag-day-weather2 {
+    height: 20vh;
+    width: 50vh;
+    margin-top: 2rem;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: #1e213a;
+  }
+  
+  .p-tag-day-weather2 {
+    color: #e7e7eb;
+    font-family: Raleway;
+    font-style: italic;
+    font-size: 1vw;
+    font-weight: 500;
+    line-height:normal;
+  }
+  
+  .h2-tag-day-weather2 {
+    color: #e7e7eb;
+    font-family: Raleway;
+    font-size: 2vw;
+    font-weight: 500;
+    margin-bottom: auto;
+    line-height: normal;
+  }
+  
+  .strong-tag-day-weather2 {
+    color: #e7e7eb;
+    font-family: Raleway;
+    font-size: 3vw;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+

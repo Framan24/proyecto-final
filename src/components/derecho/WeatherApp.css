@@ -1,0 +1,76 @@
+.App{
+height: 100vh;
+background-image: url("../../assets/Cloud-background.png");
+background-size: contain;
+Background-repeat: no-repeat
+}
+.imagen{
+    display: flex;
+    justify-content: center;
+    margin-top: 8rem;
+    margin-left: 2rem;
+}
+.numero{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.numerogra{
+    font-size: 3vw;
+  color: #a09fb1;
+  font-family: Raleway;
+  font-weight: 500;
+}
+.descripcion{
+    display: flex;
+    justify-content: center;
+    color: #a09fb1;
+    font-size: 1vw;
+}
+.today{
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    color: #88869d;
+  font-family: Raleway;
+  font-weight: 500;
+}
+.ciudad{
+    display: flex;
+    justify-content: center;
+    color: #88869d;
+  font-family: Raleway;
+  font-weight: 600;
+  margin-top: 10rem;
+  
+}
+.buscador{
+  margin: 15px;
+  padding: 5px;
+  border-radius: 2.5px;
+  color: white;
+  background-color: rgb(30, 33, 58);
+  margin-top: 10px;
+  
+
+}
+.btn{
+  color: white;
+  border-radius: 1.5px;
+  margin: 15px;
+  padding: 5px;
+  background-color:rgb(60, 71, 233);
+}
+.sidebar{
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(110, 112, 122);
+  font-size: medium;
+  margin: 15px;
+  padding: 5px;
+}
+.barra{
+  position: relative;
+  
+}
