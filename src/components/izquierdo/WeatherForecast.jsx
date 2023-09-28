@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./WeatherForecast.css";
 
-function WeatherForecast({ sendCountry, apiKey }) {
+function WeatherForecast({ sendCountry, apiKey,  }) {
   const [forecastData, setForecastData] = useState([]);
   const [error, setError] = useState(null);
   const [unit, setUnit] = useState("metric");
@@ -11,54 +11,71 @@ function WeatherForecast({ sendCountry, apiKey }) {
     const fetchWeatherForecast = async () => {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?q=${sendCountry}&appid=${apiKey}&units=metric`
+          `https://api.openweathermap.org/data/2.5/forecast?q=${sendCountry}&appid=${apiKey}&units=${unit}`
         );
 
         if (!response.data.list || response.data.list.length === 0) {
           throw new Error("No se encontraron datos de pronóstico.");
         }
 
-       // Obtener la fecha actual
+        // Obtener la fecha actual
         const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + 1);
+
+        // Calcular la fecha para el quinto día a partir de la fecha actual
+        const fifthDay = new Date(currentDate);
+        fifthDay.setDate(currentDate.getDate() + 5);
+
         // Filtrar los datos para obtener solo los de los próximos cinco días
         const filteredData = response.data.list.filter((item) => {
           // Convertir la fecha del elemento a un objeto Date
           const itemDate = new Date(item.dt * 1000); // Multiplicar por 1000 para convertir segundos a milisegundos
 
-          // Verificar si la fecha del elemento es mayor o igual a la fecha actual
-          // Esto mostrará los datos de los próximos 5 días.
-          return itemDate >= currentDate;
-        }); 
+          // Verificar si la fecha del elemento está dentro de los próximos 5 días
+          return itemDate >= currentDate && itemDate <= fifthDay;
+        });
 
-        // Tomar solo los primeros 5 elementos para los próximos 5 días
-        setForecastData(filteredData.slice(0, 5));
+        // Tomar solo el primer registro de cada día
+        const dailyData = [];
+        let currentDay = null;
+
+        for (const item of filteredData) {
+          const itemDate = new Date(item.dt * 1000);
+
+          if (!currentDay || itemDate.getDate() !== currentDay.getDate()) {
+            dailyData.push(item);
+            currentDay = itemDate;
+          }
+        }
+
+        setForecastData(dailyData);
       } catch (error) {
         setError(error);
       }
     };
 
     fetchWeatherForecast();
-  }, [sendCountry, apiKey]);
+  }, [sendCountry, apiKey, unit]);
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
   const iconBaseUrl = "https://openweathermap.org/img/wn/";
+
   const toggleUnit = () => {
-    if (unit === "metric") {
-      setUnit("imperial");
-    } else {
-      setUnit("metric");
-    }
+    setUnit(unit === "metric" ? "imperial" : "metric");
+  };
+
+  // Función para redondear un número a dos decimales
+  const roundToTwoDecimalPlaces = (value) => {
+    return Math.round(value * 100) / 100;
   };
 
   const convertTemperature = (tempCelsius) => {
     if (unit === "imperial") {
-      return (tempCelsius * 9) / 5 + 32;
+      return roundToTwoDecimalPlaces((tempCelsius * 9) / 5 + 32);
     } else {
-      return tempCelsius;
+      return roundToTwoDecimalPlaces(tempCelsius);
     }
   };
 
